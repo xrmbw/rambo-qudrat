@@ -879,6 +879,100 @@ textarea:focus{
     margin-top:8px;
   }
 }
+
+
+/* =========================
+   Responsive sidebar fix
+   ========================= */
+@media (max-width:1200px) and (min-width:701px){
+  .sidebar{
+    width:220px;
+    padding:18px 12px;
+  }
+
+  .main{
+    width:calc(100% - 220px);
+    margin-right:220px;
+    padding:22px 24px 40px;
+  }
+
+  .page-head{
+    flex-wrap:wrap;
+  }
+
+  .page-head > div{
+    min-width:0;
+  }
+
+  .page-head .add-btn{
+    flex:0 0 auto;
+  }
+
+  .search{
+    width:210px;
+  }
+}
+
+@media (max-width:900px) and (min-width:701px){
+  .sidebar{
+    width:200px;
+    padding:16px 10px;
+  }
+
+  .main{
+    width:calc(100% - 200px);
+    margin-right:200px;
+    padding:20px 18px 35px;
+  }
+
+  .brand strong{
+    font-size:15px;
+  }
+
+  .menu button,
+  .submenu button,
+  .group-title{
+    padding:9px 8px;
+    font-size:11px;
+  }
+
+  .search{
+    width:180px;
+  }
+
+  .page-head{
+    gap:10px;
+  }
+
+  .page-head h2{
+    font-size:20px;
+  }
+}
+
+@media (max-width:700px){
+  body{
+    overflow-x:hidden;
+  }
+
+  .sidebar{
+    width:260px;
+    max-width:86vw;
+    box-shadow:-12px 0 35px rgba(0,0,0,.35);
+  }
+
+  .main{
+    width:100%;
+    margin-right:0;
+    min-width:0;
+  }
+
+  .page-head .add-btn{
+    display:block;
+    width:100%;
+    max-width:100%;
+  }
+}
+
 </style>
 </head>
 
