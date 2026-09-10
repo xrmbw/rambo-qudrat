@@ -2438,6 +2438,57 @@ async function initialize(){
 
 initialize();
 </script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<script>
+const SUPABASE_URL = "https://fipjkaxezsyovjrhatiu.supabase.co/rest/v1/";
+const SUPABASE_KEY = "sb_publishable_E66h2Ypr4-LTpdo7YJwKSw_3fT71tQF";
+
+const supabaseClient = supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+</script>
+  <input type="file" id="fileInput">
+
+<button onclick="uploadFile()">
+    رفع الملف
+</button>
+
+<p id="uploadStatus"></p>
+
+<script>
+async function uploadFile() {
+
+    const fileInput = document.getElementById("fileInput");
+    const status = document.getElementById("uploadStatus");
+
+    if (!fileInput.files.length) {
+        status.textContent = "اختر ملف أولاً";
+        return;
+    }
+
+    const file = fileInput.files[0];
+
+    const filePath = Date.now() + "_" + file.name;
+
+    status.textContent = "جاري رفع الملف...";
+
+    const { data, error } = await supabaseClient
+        .storage
+        .from("rambo-files")
+        .upload(filePath, file);
+
+    if (error) {
+        console.error(error);
+        status.textContent = "حدث خطأ أثناء رفع الملف";
+        return;
+    }
+
+    status.textContent = "تم رفع الملف بنجاح ✅";
+
+    console.log("تم رفع:", data);
+}
+</script>
 </body>
 </html>
