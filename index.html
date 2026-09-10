@@ -1065,6 +1065,103 @@ textarea:focus{
     border-radius:12px;
   }
 }
+
+
+/* =========================
+   Hover sidebar + Forms tests
+========================= */
+@media (min-width:701px){
+  .sidebar{
+    width:260px !important;
+    right:0 !important;
+    transform:translateX(calc(100% - 10px));
+    transition:transform .22s ease, box-shadow .22s ease;
+    box-shadow:none;
+    z-index:5000 !important;
+  }
+
+  .sidebar:hover,
+  .sidebar.open{
+    transform:translateX(0);
+    box-shadow:-12px 0 35px rgba(0,0,0,.45);
+  }
+
+  .main{
+    width:100% !important;
+    margin-right:0 !important;
+    padding-right:32px;
+  }
+
+  .modal-overlay{
+    z-index:100000 !important;
+    padding:15px !important;
+  }
+
+  .modal,
+  .viewer{
+    position:relative;
+    z-index:100001 !important;
+  }
+}
+
+.forms-section{
+  margin-top:22px;
+}
+
+.form-badge{
+  display:inline-block;
+  padding:4px 9px;
+  margin-bottom:7px;
+  color:#ffbd61;
+  background:rgba(242,138,37,.10);
+  border:1px solid rgba(242,138,37,.28);
+  border-radius:999px;
+  font-size:10px;
+}
+
+.form-viewer-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:12px;
+}
+
+.form-viewer-head h2{
+  margin:5px 0 0;
+}
+
+.forms-iframe{
+  display:block;
+  width:100%;
+  height:72vh;
+  min-height:520px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fff;
+}
+
+.form-external{
+  text-align:center;
+  padding:45px 20px;
+}
+
+.form-link{
+  display:inline-block;
+  text-decoration:none;
+  margin-top:15px;
+}
+
+@media(max-width:700px){
+  .form-viewer-head{
+    display:block;
+  }
+
+  .forms-iframe{
+    height:70vh;
+    min-height:480px;
+  }
+}
 </style>
 </head>
 
@@ -1347,6 +1444,18 @@ textarea:focus{
 
     <div class="quiz-grid" id="quizList"></div>
 
+    <div class="card forms-section">
+      <div class="page-head" style="margin-bottom:16px">
+        <div>
+          <span class="eyebrow">اختبارات Forms</span>
+          <h3 style="margin:5px 0">اختبارات خارجية</h3>
+          <p style="margin:0">أضف Google Forms أو Microsoft Forms وسيكتشف الموقع نوع الرابط تلقائيًا.</p>
+        </div>
+        <button class="add-btn" onclick="openFormModal()">+ إضافة اختبار Forms</button>
+      </div>
+      <div class="quiz-grid" id="formsList"></div>
+    </div>
+
   </section>
 
 </main>
@@ -1520,6 +1629,48 @@ textarea:focus{
   </div>
 </div>
 
+<!-- نافذة إضافة اختبار Forms -->
+
+<div class="modal-overlay" id="formModal">
+
+  <div class="modal">
+
+    <button class="close" onclick="closeModal('formModal')">×</button>
+
+    <h2>إضافة اختبار Forms</h2>
+    <p>الصق رابط الاختبار، وسيكتشف الموقع تلقائيًا إذا كان Google Forms أو Microsoft Forms.</p>
+
+    <form id="formTestForm">
+
+      <label class="form-label">
+        اسم الاختبار
+        <input id="formTestTitle" required placeholder="مثال: اختبار كمي تجريبي">
+      </label>
+
+      <label class="form-label">
+        القسم
+        <select id="formTestCategory">
+          <option value="quant-tests">اختبار كمي</option>
+          <option value="verbal-tests">اختبار لفظي</option>
+        </select>
+      </label>
+
+      <label class="form-label">
+        رابط الـ Forms
+        <input id="formTestUrl" type="url" required placeholder="https://docs.google.com/forms/...">
+      </label>
+
+      <label class="form-label">
+        وصف اختياري
+        <textarea id="formTestDescription" placeholder="مثال: اختبار محاكي شامل"></textarea>
+      </label>
+
+      <button class="save-btn" type="submit">إضافة الاختبار</button>
+
+    </form>
+  </div>
+</div>
+
 <!-- نافذة عرض الوسائط -->
 
 <div class="modal-overlay" id="viewerModal">
@@ -1554,11 +1705,12 @@ textarea:focus{
 ========================= */
 
 const DB_NAME = "rambo_qudrat_database";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 
 let db;
 let resources = [];
 let quizzes = [];
+let forms = [];
 
 let currentCategory = null;
 let currentQuizCategory = null;
@@ -1623,6 +1775,10 @@ function openDatabase(){
 
       if(!database.objectStoreNames.contains("quizzes")){
         database.createObjectStore("quizzes",{keyPath:"id"});
+      }
+
+      if(!database.objectStoreNames.contains("forms")){
+        database.createObjectStore("forms",{keyPath:"id"});
       }
     };
 
@@ -2324,6 +2480,172 @@ function renderQuizzes(){
   }).join("");
 }
 
+function detectFormType(url){
+  try{
+    const host = new URL(url).hostname.toLowerCase();
+
+    if(host.includes("docs.google.com") && url.toLowerCase().includes("/forms/")){
+      return "google";
+    }
+
+    if(host === "forms.gle" || host.endsWith(".forms.gle")){
+      return "google-short";
+    }
+
+    if(host.includes("forms.office.com") || host.includes("forms.microsoft.com")){
+      return "microsoft";
+    }
+  }catch(error){
+    return "unknown";
+  }
+
+  return "unknown";
+}
+
+function formEmbedUrl(form){
+  if(form.kind !== "google") return "";
+
+  try{
+    const url = new URL(form.url);
+    url.searchParams.set("embedded", "true");
+    return url.toString();
+  }catch(error){
+    return form.url;
+  }
+}
+
+function formTypeLabel(kind){
+  if(kind === "google" || kind === "google-short") return "Google Forms";
+  if(kind === "microsoft") return "Microsoft Forms";
+  return "رابط Forms";
+}
+
+function renderForms(){
+  const container = document.getElementById("formsList");
+  if(!container) return;
+
+  const filtered = currentQuizCategory
+    ? forms.filter(form => form.category === currentQuizCategory)
+    : forms;
+
+  if(!filtered.length){
+    container.innerHTML = `<div class="empty" style="grid-column:1/-1">لم تضف اختبارات Forms بعد.</div>`;
+    return;
+  }
+
+  container.innerHTML = filtered.map(form=>`
+    <article class="quiz-card form-card">
+      <div class="form-badge">${escapeHTML(formTypeLabel(form.kind))}</div>
+      <h3>${escapeHTML(form.title)}</h3>
+      <p>${escapeHTML(form.description || "اختبار خارجي")}</p>
+      <div class="quiz-actions">
+        <button class="add-small" onclick="openFormTest('${form.id}')">فتح الاختبار</button>
+        <button class="open-small" onclick="deleteFormTest('${form.id}')">حذف</button>
+      </div>
+    </article>
+  `).join("");
+}
+
+function openFormModal(){
+  document.getElementById("formTestForm").reset();
+  if(currentQuizCategory){
+    document.getElementById("formTestCategory").value = currentQuizCategory;
+  }
+  openModal("formModal");
+  setTimeout(()=>document.getElementById("formTestTitle").focus(),100);
+}
+
+document.getElementById("formTestForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const title = document.getElementById("formTestTitle").value.trim();
+  const category = document.getElementById("formTestCategory").value;
+  const url = document.getElementById("formTestUrl").value.trim();
+  const description = document.getElementById("formTestDescription").value.trim();
+  const kind = detectFormType(url);
+
+  if(!title || !url){
+    alert("أكمل اسم الاختبار والرابط");
+    return;
+  }
+
+  if(kind === "unknown"){
+    alert("هذا الرابط لا يبدو كرابط Google Forms أو Microsoft Forms. يمكنك استخدام رابط Forms صحيح.");
+    return;
+  }
+
+  const form = {
+    id:createId(),
+    title,
+    category,
+    url,
+    kind,
+    description,
+    createdAt:Date.now()
+  };
+
+  try{
+    await putItem("forms",form);
+    forms.push(form);
+    closeModal("formModal");
+    renderForms();
+    showToast("تمت إضافة اختبار Forms بنجاح");
+  }catch(error){
+    console.error(error);
+    alert("تعذر حفظ اختبار Forms");
+  }
+});
+
+function openFormTest(id){
+  const form = forms.find(item=>item.id === id);
+  if(!form) return;
+
+  const content = document.getElementById("viewerContent");
+  const embedUrl = formEmbedUrl(form);
+
+  if(embedUrl){
+    content.innerHTML = `
+      <div class="form-viewer-head">
+        <div>
+          <span class="eyebrow">${escapeHTML(formTypeLabel(form.kind))}</span>
+          <h2>${escapeHTML(form.title)}</h2>
+        </div>
+        <a class="open-small" href="${escapeHTML(form.url)}" target="_blank" rel="noopener">فتح في تبويب جديد ↗</a>
+      </div>
+      <iframe
+        class="forms-iframe"
+        src="${escapeHTML(embedUrl)}"
+        title="${escapeHTML(form.title)}"
+        loading="lazy"
+        allowfullscreen></iframe>
+    `;
+  }else{
+    content.innerHTML = `
+      <div class="form-external">
+        <div style="font-size:48px">✓</div>
+        <span class="eyebrow">${escapeHTML(formTypeLabel(form.kind))}</span>
+        <h2>${escapeHTML(form.title)}</h2>
+        <p style="color:#b9c7d9;line-height:2">هذا النوع من Forms قد يمنع العرض داخل الموقع، لذلك سيفتح في صفحة آمنة جديدة.</p>
+        <a class="save-btn form-link" href="${escapeHTML(form.url)}" target="_blank" rel="noopener">فتح الاختبار ↗</a>
+      </div>
+    `;
+  }
+
+  openModal("viewerModal");
+}
+
+async function deleteFormTest(id){
+  const form = forms.find(item=>item.id === id);
+  if(!form) return;
+
+  if(!confirm(`هل تريد حذف اختبار "${form.title}"؟`)) return;
+
+  await deleteItem("forms",id);
+  forms = forms.filter(item=>item.id !== id);
+  renderForms();
+  showToast("تم حذف اختبار Forms");
+}
+
 function openQuizModal(){
   document.getElementById("quizForm").reset();
 
@@ -2597,6 +2919,7 @@ function refresh(){
 
   if(document.getElementById("quizzes").classList.contains("active")){
     renderQuizzes();
+    renderForms();
   }
 }
 
@@ -2611,6 +2934,7 @@ async function initialize(){
 
     resources = await getAll("resources");
     quizzes = await getAll("quizzes");
+    forms = await getAll("forms");
 
     refresh();
   }catch(error){
@@ -2627,7 +2951,7 @@ initialize();
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-const SUPABASE_URL = "https://fipjkaxezsyovjrhatiu.supabase.co/rest/v1/";
+const SUPABASE_URL = "https://fipjkaxezsyovjrhatiu.supabase.co";
 const SUPABASE_KEY = "sb_publishable_E66h2Ypr4-LTpdo7YJwKSw_3fT71tQF";
 
 const supabaseClient = supabase.createClient(
