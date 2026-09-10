@@ -3,126 +3,155 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RAMBO QUDRAT | مساحتي التعليمية</title>
+<title>QR | RAMBO QUDRAT</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap');
 
-:root {
+:root{
   --bg:#070d18;
   --panel:#0d1727;
-  --panel2:#111e31;
-  --border:#223650;
+  --panel2:#111f33;
+  --border:#263c58;
   --text:#eef5ff;
-  --muted:#8999ad;
+  --muted:#91a1b6;
   --orange:#f28a25;
-  --gold:#ffb451;
-  --green:#39d99b;
+  --gold:#ffbd61;
+  --green:#38d99b;
   --red:#ff7070;
+  --blue:#55aaff;
 }
 
-* {
+*{
   box-sizing:border-box;
 }
 
-body {
+body{
   margin:0;
   color:var(--text);
   font-family:'Cairo',sans-serif;
   background:
-    radial-gradient(circle at 75% 5%,rgba(242,138,37,.13),transparent 300px),
-    radial-gradient(circle at 15% 80%,rgba(40,125,210,.12),transparent 360px),
+    radial-gradient(circle at 75% 5%,rgba(242,138,37,.15),transparent 320px),
+    radial-gradient(circle at 10% 80%,rgba(40,125,210,.13),transparent 360px),
     var(--bg);
 }
 
-body:before {
-  content:"";
-  position:fixed;
-  inset:0;
-  pointer-events:none;
-  opacity:.2;
-  background-image:
-    radial-gradient(#fff 1px,transparent 1px),
-    radial-gradient(#fff 1px,transparent 1px);
-  background-size:110px 110px,170px 170px;
-  background-position:20px 30px,70px 90px;
-}
-
-button,
-input,
-select {
+button,input,select,textarea{
   font-family:inherit;
 }
 
-button {
+button{
   cursor:pointer;
 }
 
-.app {
-  position:relative;
-  z-index:1;
-  min-height:100vh;
+button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
 
-.sidebar {
+.app{
+  min-height:100vh;
+  position:relative;
+  z-index:1;
+}
+
+.sidebar{
   position:fixed;
   top:0;
   right:0;
   bottom:0;
-  z-index:10;
-  width:250px;
-  padding:22px 16px;
-  background:rgba(7,14,27,.96);
+  z-index:20;
+  width:260px;
+  padding:20px 15px;
+  overflow-y:auto;
+  background:rgba(7,14,27,.98);
   border-left:1px solid var(--border);
 }
 
-.logo {
+.brand{
   display:flex;
   align-items:center;
-  gap:10px;
-  padding:4px 7px 22px;
+  gap:11px;
+  padding:5px 7px 20px;
   border-bottom:1px solid var(--border);
 }
 
-.logo-mark {
-  width:42px;
-  height:42px;
+.brand-mark{
+  width:46px;
+  height:46px;
   display:grid;
   place-items:center;
   color:var(--gold);
+  background:
+    linear-gradient(135deg,rgba(242,138,37,.3),rgba(255,189,97,.04));
   border:1px solid var(--orange);
-  border-radius:50%;
-  box-shadow:0 0 23px rgba(242,138,37,.22);
+  border-radius:13px;
+  box-shadow:0 0 24px rgba(242,138,37,.22);
+  font-size:21px;
+  font-weight:800;
+  letter-spacing:-2px;
 }
 
-.logo strong {
+.brand strong{
   display:block;
-  letter-spacing:1px;
   font-size:17px;
+  letter-spacing:1px;
 }
 
-.logo small {
+.brand small{
   display:block;
+  margin-top:1px;
   color:var(--gold);
+  font-size:10px;
   letter-spacing:2px;
+}
+
+.menu-title{
+  margin:22px 10px 7px;
+  color:#647892;
   font-size:10px;
 }
 
-.menu {
-  margin-top:23px;
-}
-
-.menu-label {
-  margin:19px 10px 7px;
-  color:#61738b;
-  font-size:10px;
-}
-
-.menu button {
+.menu button,
+.submenu button{
   width:100%;
+  padding:10px 12px;
   margin:2px 0;
-  padding:11px 12px;
-  color:#aab8ca;
+  color:#aebdd0;
+  text-align:right;
+  background:transparent;
+  border:0;
+  border-radius:8px;
+  font-size:12px;
+  transition:.2s;
+}
+
+.menu button:hover,
+.menu button.active,
+.submenu button:hover,
+.submenu button.active{
+  color:#fff;
+  background:linear-gradient(90deg,rgba(242,138,37,.2),rgba(242,138,37,.03));
+  border-right:3px solid var(--orange);
+}
+
+.menu button span,
+.submenu button span{
+  display:inline-block;
+  width:25px;
+  color:var(--gold);
+  font-size:16px;
+  vertical-align:middle;
+}
+
+.group-title{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
+  padding:10px 12px;
+  margin-top:2px;
+  color:#aebdd0;
   text-align:right;
   background:transparent;
   border:0;
@@ -130,39 +159,52 @@ button {
   font-size:12px;
 }
 
-.menu button:hover,
-.menu button.active {
-  color:#fff;
-  background:linear-gradient(90deg,rgba(242,138,37,.18),rgba(242,138,37,.03));
-  border-right:3px solid var(--orange);
+.group-title:hover{
+  background:rgba(242,138,37,.09);
 }
 
-.menu button span {
-  margin-left:9px;
-  font-size:16px;
+.arrow{
+  color:var(--gold);
+  transition:.2s;
 }
 
-.sidebar-footer {
-  position:absolute;
-  right:16px;
-  bottom:20px;
-  left:16px;
-  padding:12px;
+.group.open .arrow{
+  transform:rotate(180deg);
+}
+
+.submenu{
+  display:none;
+  padding-right:12px;
+}
+
+.group.open .submenu{
+  display:block;
+}
+
+.submenu button{
+  color:#899bb2;
+  font-size:11px;
+}
+
+.sidebar-footer{
+  padding:13px;
+  margin-top:25px;
   color:var(--muted);
   background:#0b1525;
   border:1px solid var(--border);
   border-radius:10px;
   font-size:10px;
+  line-height:1.9;
 }
 
-.main {
-  width:calc(100% - 250px);
+.main{
+  width:calc(100% - 260px);
   min-height:100vh;
-  margin-right:250px;
-  padding:25px 32px 40px;
+  margin-right:260px;
+  padding:25px 32px 45px;
 }
 
-.topbar {
+.topbar{
   display:flex;
   align-items:center;
   justify-content:space-between;
@@ -170,19 +212,34 @@ button {
   margin-bottom:25px;
 }
 
-.heading h1 {
+.heading{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.heading h1{
   margin:0;
   font-size:23px;
 }
 
-.heading p {
-  margin:5px 0 0;
+.heading p{
+  margin:4px 0 0;
   color:var(--muted);
-  font-size:12px;
+  font-size:11px;
 }
 
-.search {
-  width:230px;
+.mobile-menu{
+  display:none;
+  padding:6px 10px;
+  color:#fff;
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:7px;
+}
+
+.search{
+  width:240px;
   padding:10px 13px;
   color:#fff;
   background:var(--panel);
@@ -191,66 +248,72 @@ button {
   outline:0;
 }
 
-.mobile-menu {
-  display:none;
-  margin-left:8px;
-  padding:6px 10px;
-  color:#fff;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:7px;
+.search:focus,
+input:focus,
+select:focus,
+textarea:focus{
+  border-color:var(--orange);
 }
 
-.hero {
+.page{
+  display:none;
+}
+
+.page.active{
+  display:block;
+}
+
+.hero{
   position:relative;
-  min-height:175px;
+  min-height:230px;
   display:flex;
   align-items:center;
   overflow:hidden;
-  padding:28px;
+  padding:32px;
   margin-bottom:20px;
   background:
-    linear-gradient(90deg,rgba(12,30,51,.95),rgba(12,24,40,.7)),
-    radial-gradient(ellipse at 70% 130%,#e98221,transparent 38%);
-  border:1px solid #2a4563;
-  border-radius:16px;
+    linear-gradient(100deg,rgba(12,30,51,.97),rgba(12,24,40,.72)),
+    radial-gradient(ellipse at 75% 125%,#e98221,transparent 40%);
+  border:1px solid #2d4a69;
+  border-radius:17px;
 }
 
-.hero:after {
+.hero:after{
   content:"";
   position:absolute;
-  width:560px;
-  height:170px;
-  left:18%;
-  bottom:-125px;
-  border:1px solid rgba(255,180,81,.5);
+  width:620px;
+  height:190px;
+  left:12%;
+  bottom:-142px;
+  border:1px solid rgba(255,189,97,.45);
   border-radius:50%;
-  box-shadow:0 0 20px rgba(255,180,81,.25);
+  box-shadow:0 0 25px rgba(255,180,81,.2);
 }
 
-.hero-content {
+.hero-content{
   position:relative;
   z-index:1;
 }
 
-.hero h2 {
-  margin:0 0 8px;
-  font-size:23px;
+.hero h2{
+  margin:0 0 9px;
+  font-size:25px;
 }
 
-.hero h2 span {
+.hero h2 span{
   color:var(--gold);
 }
 
-.hero p {
-  margin:0 0 17px;
-  color:#bcc9d8;
+.hero p{
+  max-width:610px;
+  margin:0 0 20px;
+  color:#c2cfdf;
   font-size:12px;
 }
 
 .primary,
-.add-main-btn,
-.save-btn {
+.add-btn,
+.save-btn{
   padding:10px 19px;
   color:#fff;
   background:linear-gradient(135deg,var(--orange),#c95e13);
@@ -259,7 +322,7 @@ button {
   box-shadow:0 7px 18px rgba(242,138,37,.18);
 }
 
-.secondary {
+.secondary{
   padding:9px 17px;
   margin-right:7px;
   color:#bdc9d8;
@@ -268,156 +331,105 @@ button {
   border-radius:7px;
 }
 
-.cards {
+.quick-title{
+  margin:0 0 12px;
+  font-size:15px;
+}
+
+.quick-grid{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:14px;
-  margin-bottom:18px;
+  margin-bottom:23px;
 }
 
-.card,
-.stat-card,
-.category-card {
+.quick-card{
+  padding:17px;
+  color:#dfeafb;
+  text-align:right;
   background:rgba(13,23,39,.93);
   border:1px solid var(--border);
   border-radius:12px;
+  transition:.2s;
 }
 
-.stat-card {
-  padding:17px;
+.quick-card:hover{
+  border-color:var(--orange);
+  transform:translateY(-2px);
 }
 
-.stat-card span,
-.stat-card small {
+.quick-card .quick-icon{
   display:block;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.stat-card strong {
-  display:block;
-  margin:7px 0 2px;
-  font-size:27px;
-}
-
-.progress {
-  height:5px;
-  margin-top:12px;
-  overflow:hidden;
-  background:#1c2b40;
-  border-radius:20px;
-}
-
-.progress i {
-  display:block;
-  height:100%;
-  background:linear-gradient(90deg,var(--orange),var(--gold));
-  border-radius:20px;
-}
-
-.page {
-  display:none;
-}
-
-.page.active {
-  display:block;
-}
-
-.student-header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:20px;
-  margin-bottom:22px;
-}
-
-.eyebrow {
+  margin-bottom:10px;
   color:var(--gold);
-  font-size:11px;
-}
-
-.student-header h2 {
-  margin:6px 0;
   font-size:23px;
 }
 
-.student-header p {
+.quick-card strong{
+  display:block;
+  font-size:13px;
+}
+
+.quick-card small{
+  display:block;
+  margin-top:4px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.page-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.page-head h2{
+  margin:5px 0;
+  font-size:23px;
+}
+
+.page-head p{
   margin:0;
   color:var(--muted);
   font-size:12px;
 }
 
-.real-stats {
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:14px;
-  margin-bottom:17px;
-}
-
-.real-stat {
-  padding:17px;
-  background:rgba(13,23,39,.93);
-  border:1px solid var(--border);
-  border-radius:12px;
-}
-
-.real-stat span,
-.real-stat small {
-  display:block;
-  color:var(--muted);
-  font-size:11px;
-}
-
-.real-stat strong {
-  display:block;
-  margin:7px 0 2px;
-  color:#fff;
-  font-size:27px;
-}
-
-.student-note {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:12px 15px;
-  margin-bottom:18px;
-  color:#aebbd0;
-  background:rgba(35,65,94,.25);
-  border:1px solid #27405d;
-  border-radius:8px;
-  font-size:11px;
-}
-
-.student-note b {
+.eyebrow{
   color:var(--gold);
+  font-size:11px;
 }
 
-.categories-grid {
+.categories-grid{
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:15px;
 }
 
-.category-card {
-  min-height:245px;
+.category-card{
+  min-height:210px;
   padding:17px;
+  background:rgba(13,23,39,.93);
+  border:1px solid var(--border);
+  border-radius:12px;
   transition:.2s;
 }
 
-.category-card:hover {
+.category-card:hover{
   border-color:var(--orange);
   transform:translateY(-2px);
 }
 
-.category-top {
+.category-top{
   display:flex;
   justify-content:space-between;
   gap:10px;
 }
 
-.category-icon {
-  width:39px;
-  height:39px;
+.category-icon{
+  width:40px;
+  height:40px;
   display:grid;
   place-items:center;
   color:var(--gold);
@@ -426,177 +438,268 @@ button {
   font-size:19px;
 }
 
-.category-card h3 {
+.category-card h3{
   margin:11px 0 3px;
   font-size:14px;
 }
 
-.category-card p {
+.category-card p{
   margin:0;
   color:var(--muted);
   font-size:10px;
 }
 
-.category-count {
+.category-count{
   color:var(--gold);
   white-space:nowrap;
   font-size:10px;
 }
 
-.category-actions {
+.category-actions{
   display:flex;
   gap:7px;
-  margin-top:15px;
+  margin-top:17px;
 }
 
-.category-actions button {
+.category-actions button{
   flex:1;
   padding:8px 4px;
   border-radius:6px;
-  font-family:inherit;
   font-size:10px;
 }
 
-.add-resource-small {
+.add-small{
   color:#fff;
   background:#bd5e17;
   border:1px solid #df7928;
 }
 
-.mark-category {
+.open-small{
   color:#b9c7d9;
   background:transparent;
   border:1px solid #2b405a;
 }
 
-.resource-list {
+.card{
+  padding:20px;
+  background:rgba(13,23,39,.93);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.card h3{
+  margin:0 0 10px;
+  font-size:16px;
+}
+
+.card p{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.resource-list{
   margin-top:14px;
 }
 
-.empty-resources {
-  padding:18px 5px;
-  color:#718298;
-  text-align:center;
-  font-size:10px;
-}
-
-.resource-item {
+.resource-item{
   display:flex;
   align-items:center;
-  gap:8px;
-  padding:8px 0;
+  gap:9px;
+  padding:10px 0;
   border-bottom:1px solid #1d2d42;
 }
 
-.resource-item:last-child {
+.resource-item:last-child{
   border-bottom:0;
 }
 
-.resource-item-info {
+.resource-info{
   flex:1;
   min-width:0;
 }
 
-.resource-item-info a {
+.resource-info strong{
   display:block;
   overflow:hidden;
   color:#dbe7f5;
   text-overflow:ellipsis;
-  text-decoration:none;
   white-space:nowrap;
   font-size:11px;
 }
 
-.resource-item-info small {
+.resource-info small{
   color:#7f90a5;
   font-size:9px;
 }
 
-.resource-item.completed a {
+.resource-item.completed strong{
   color:var(--green);
   text-decoration:line-through;
 }
 
-.resource-check {
-  width:21px;
-  height:21px;
+.resource-check{
+  width:22px;
+  height:22px;
   color:#fff;
   background:transparent;
   border:1px solid #37506d;
   border-radius:5px;
 }
 
-.resource-check.done {
+.resource-check.done{
   background:#22966c;
   border-color:#22966c;
 }
 
-.delete-resource {
-  color:var(--red);
+.resource-open,
+.resource-delete{
+  padding:3px 6px;
+  color:var(--gold);
   background:transparent;
   border:0;
-  font-size:16px;
-}
-
-.card {
-  padding:20px;
-}
-
-.card h3 {
-  margin:0 0 8px;
   font-size:15px;
 }
 
-.card p {
-  color:var(--muted);
-  font-size:12px;
+.resource-delete{
+  color:var(--red);
 }
 
-.modal-overlay {
+.empty{
+  padding:22px 5px;
+  color:#718298;
+  text-align:center;
+  font-size:11px;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:20px;
+}
+
+.stat{
+  padding:19px;
+  background:rgba(13,23,39,.93);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.stat span{
+  display:block;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.stat strong{
+  display:block;
+  margin-top:7px;
+  color:#fff;
+  font-size:28px;
+}
+
+.progress{
+  height:6px;
+  margin-top:12px;
+  overflow:hidden;
+  background:#1c2b40;
+  border-radius:20px;
+}
+
+.progress i{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--orange),var(--gold));
+  border-radius:20px;
+}
+
+.quiz-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+}
+
+.quiz-card{
+  padding:18px;
+  background:rgba(13,23,39,.93);
+  border:1px solid var(--border);
+  border-radius:12px;
+}
+
+.quiz-card h3{
+  margin:0 0 5px;
+  font-size:15px;
+}
+
+.quiz-card p{
+  margin:0 0 15px;
+  color:var(--muted);
+  font-size:11px;
+}
+
+.quiz-actions{
+  display:flex;
+  gap:7px;
+}
+
+.quiz-actions button{
+  flex:1;
+  padding:8px;
+  border-radius:6px;
+  font-size:10px;
+}
+
+.modal-overlay{
   position:fixed;
   inset:0;
-  z-index:50;
+  z-index:100;
   display:none;
   align-items:center;
   justify-content:center;
   padding:15px;
-  background:rgba(0,0,0,.75);
+  background:rgba(0,0,0,.78);
 }
 
-.modal-overlay.show {
+.modal-overlay.show{
   display:flex;
 }
 
-.modal {
+.modal{
   position:relative;
-  width:min(500px,100%);
+  width:min(620px,100%);
+  max-height:92vh;
   padding:24px;
+  overflow-y:auto;
   background:#0d1829;
   border:1px solid #304965;
   border-radius:14px;
 }
 
-.modal h2 {
+.modal.large{
+  width:min(850px,100%);
+}
+
+.modal h2{
   margin:0;
   font-size:19px;
 }
 
-.modal p {
+.modal > p{
   color:var(--muted);
   font-size:11px;
 }
 
-.close {
+.close{
   position:absolute;
-  top:9px;
-  left:14px;
+  top:8px;
+  left:13px;
   color:#a9b9cc;
   background:transparent;
   border:0;
   font-size:25px;
 }
 
-.form-label {
+.form-label{
   display:block;
   margin-top:12px;
   color:#b4c1d2;
@@ -604,10 +707,11 @@ button {
 }
 
 .form-label input,
-.form-label select {
+.form-label select,
+.form-label textarea{
   width:100%;
-  margin-top:5px;
   padding:10px;
+  margin-top:5px;
   color:#fff;
   background:#081322;
   border:1px solid #263d58;
@@ -615,16 +719,83 @@ button {
   outline:0;
 }
 
-.save-btn {
+.form-label textarea{
+  min-height:80px;
+  resize:vertical;
+}
+
+.form-label input[type="file"]{
+  padding:8px;
+}
+
+.save-btn{
   width:100%;
   margin-top:19px;
 }
 
-.toast {
+.option-row{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-top:8px;
+}
+
+.option-row input[type="radio"]{
+  accent-color:var(--orange);
+}
+
+.option-row input[type="text"]{
+  flex:1;
+  padding:9px;
+  color:#fff;
+  background:#081322;
+  border:1px solid #263d58;
+  border-radius:7px;
+  outline:0;
+}
+
+.viewer{
+  width:min(1000px,100%);
+  height:min(86vh,750px);
+  padding:15px;
+  background:#091321;
+  border-radius:13px;
+}
+
+.viewer-content{
+  width:100%;
+  height:100%;
+  display:grid;
+  place-items:center;
+  overflow:hidden;
+  background:#050b14;
+  border-radius:8px;
+}
+
+.viewer-content img,
+.viewer-content video,
+.viewer-content iframe{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  border:0;
+}
+
+.viewer-content iframe{
+  background:#fff;
+}
+
+.viewer-message{
+  color:#b9c7d9;
+  text-align:center;
+  font-size:13px;
+}
+
+.toast{
   position:fixed;
   right:25px;
   bottom:22px;
-  z-index:100;
+  z-index:200;
   padding:11px 17px;
   color:#fff;
   background:#14263b;
@@ -636,67 +807,76 @@ button {
   font-size:11px;
 }
 
-.toast.show {
+.toast.show{
   opacity:1;
   transform:translateY(0);
 }
 
-@media(max-width:950px) {
-  .cards,
-  .real-stats {
+@media(max-width:1000px){
+  .categories-grid{
     grid-template-columns:repeat(2,1fr);
   }
 
-  .categories-grid {
+  .quick-grid,
+  .stats-grid{
     grid-template-columns:repeat(2,1fr);
   }
 }
 
-@media(max-width:650px) {
-  .sidebar {
-    right:-250px;
+@media(max-width:700px){
+  .sidebar{
+    right:-260px;
     transition:.25s;
   }
 
-  .sidebar.open {
+  .sidebar.open{
     right:0;
   }
 
-  .main {
+  .main{
     width:100%;
     margin-right:0;
-    padding:17px 13px;
+    padding:17px 13px 35px;
   }
 
-  .mobile-menu {
+  .mobile-menu{
     display:inline-block;
   }
 
-  .search {
-    width:150px;
+  .topbar{
+    align-items:flex-start;
   }
 
-  .hero {
-    padding:22px;
+  .search{
+    width:145px;
   }
 
-  .hero h2 {
-    font-size:18px;
+  .hero{
+    padding:23px;
   }
 
-  .cards,
-  .real-stats,
-  .categories-grid {
+  .hero h2{
+    font-size:19px;
+  }
+
+  .categories-grid,
+  .quick-grid,
+  .stats-grid,
+  .quiz-grid{
     grid-template-columns:1fr;
   }
 
-  .student-header {
+  .page-head{
     display:block;
   }
 
-  .add-main-btn {
+  .add-btn{
     width:100%;
     margin-top:15px;
+  }
+
+  .secondary{
+    margin-top:8px;
   }
 }
 </style>
@@ -708,8 +888,8 @@ button {
 
 <aside class="sidebar" id="sidebar">
 
-  <div class="logo">
-    <div class="logo-mark">◈</div>
+  <div class="brand">
+    <div class="brand-mark">QR</div>
     <div>
       <strong>RAMBO</strong>
       <small>QUDRAT</small>
@@ -718,48 +898,82 @@ button {
 
   <nav class="menu">
 
-    <div class="menu-label">مساحتي</div>
+    <div class="menu-title">مساحتي</div>
 
-    <button class="active" data-page="home">
+    <button class="nav-btn active" data-page="home">
       <span>⌂</span> الرئيسية
     </button>
 
-    <button data-page="resources">
+    <button class="nav-btn" data-page="stats">
+      <span>▥</span> الإحصائيات
+    </button>
+
+    <button class="nav-btn" data-page="resources">
       <span>▤</span> مصادري
     </button>
 
-    <div class="menu-label">القدرات</div>
+    <div class="menu-title">القدرات</div>
 
-    <button data-page="quant-foundation">
-      <span>∑</span> تأسيس كمي
-    </button>
+    <div class="group open">
+      <button class="group-title" type="button">
+        <span>∑</span>
+        <b>الكمي</b>
+        <i class="arrow">⌄</i>
+      </button>
 
-    <button data-page="verbal-foundation">
-      <span>ع</span> تأسيس لفظي
-    </button>
+      <div class="submenu">
+        <button class="nav-btn" data-page="quant-foundation">
+          <span>◈</span> تأسيس كمي
+        </button>
 
-    <button data-page="quant-training">
-      <span>⌁</span> تدريب كمي
-    </button>
+        <button class="nav-btn" data-page="quant-training">
+          <span>◌</span> تدريب كمي
+        </button>
+      </div>
+    </div>
 
-    <button data-page="verbal-training">
-      <span>✦</span> تدريب لفظي
-    </button>
+    <div class="group open">
+      <button class="group-title" type="button">
+        <span>ع</span>
+        <b>اللفظي</b>
+        <i class="arrow">⌄</i>
+      </button>
 
-    <button data-page="quant-tests">
-      <span>▣</span> اختبارات كمي
-    </button>
+      <div class="submenu">
+        <button class="nav-btn" data-page="verbal-foundation">
+          <span>◈</span> تأسيس لفظي
+        </button>
 
-    <button data-page="verbal-tests">
-      <span>✓</span> اختبارات لفظي
-    </button>
+        <button class="nav-btn" data-page="verbal-training">
+          <span>◌</span> تدريب لفظي
+        </button>
+      </div>
+    </div>
+
+    <div class="group">
+      <button class="group-title" type="button">
+        <span>✓</span>
+        <b>الاختبارات</b>
+        <i class="arrow">⌄</i>
+      </button>
+
+      <div class="submenu">
+        <button class="nav-btn" data-page="quant-tests">
+          <span>▣</span> اختبارات كمي
+        </button>
+
+        <button class="nav-btn" data-page="verbal-tests">
+          <span>▣</span> اختبارات لفظي
+        </button>
+      </div>
+    </div>
 
   </nav>
 
   <div class="sidebar-footer">
     <div>مساحتك الشخصية</div>
-    <strong style="color:#ffb451">كل تقدمك في مكان واحد</strong>
-    <div style="margin-top:6px">ابدأ بإضافة أول مصدر لك</div>
+    <strong style="color:#ffbd61">كل تقدمك في مكان واحد</strong>
+    <div>المصادر محفوظة على جهازك</div>
   </div>
 
 </aside>
@@ -769,8 +983,11 @@ button {
   <div class="topbar">
     <div class="heading">
       <button class="mobile-menu" id="mobileMenu">☰</button>
-      <h1 id="pageTitle">مساحتي التعليمية</h1>
-      <p>منصة شخصية لتنظيم استعدادك لاختبار القدرات</p>
+
+      <div>
+        <h1 id="pageTitle">مساحتي التعليمية</h1>
+        <p>منصة شخصية لتنظيم استعدادك لاختبار القدرات</p>
+      </div>
     </div>
 
     <input
@@ -779,68 +996,127 @@ button {
       placeholder="ابحث في مصادرك...">
   </div>
 
+  <!-- الرئيسية -->
+
   <section class="page active" id="home">
 
     <div class="hero">
       <div class="hero-content">
         <h2>مرحبًا بك في <span>مساحتك الخاصة</span></h2>
+
         <p>
-          اجمع مصادر التأسيس والتدريب والاختبارات، وتابع إنجازك الحقيقي بدون أرقام وهمية.
+          اجمع مصادر التأسيس والتدريب والاختبارات في مكان واحد،
+          وذاكر بطريقة منظمة تناسبك.
         </p>
-        <button class="primary" onclick="openModal()">
-          إضافة مصدر جديد
+
+        <button class="primary" onclick="openResourceModal()">
+          + إضافة مصدر جديد
         </button>
+
         <button class="secondary" onclick="goToPage('resources')">
           عرض مصادري
         </button>
       </div>
     </div>
 
-    <div class="real-stats">
-      <div class="real-stat">
+    <h3 class="quick-title">إجراءات سريعة</h3>
+
+    <div class="quick-grid">
+
+      <button class="quick-card" onclick="openResourceModal()">
+        <span class="quick-icon">＋</span>
+        <strong>إضافة مصدر</strong>
+        <small>أضف فيديو أو ملفًا من جهازك</small>
+      </button>
+
+      <button class="quick-card" onclick="goToPage('resources')">
+        <span class="quick-icon">▤</span>
+        <strong>مصادري</strong>
+        <small>استعرض جميع موادك التعليمية</small>
+      </button>
+
+      <button class="quick-card" onclick="goToPage('stats')">
+        <span class="quick-icon">▥</span>
+        <strong>الإحصائيات</strong>
+        <small>تابع تقدمك وإنجازك</small>
+      </button>
+
+      <button class="quick-card" onclick="goToPage('quant-tests')">
+        <span class="quick-icon">✓</span>
+        <strong>ابدأ اختبارًا</strong>
+        <small>اختبر نفسك في الكمي أو اللفظي</small>
+      </button>
+
+    </div>
+
+    <div class="card">
+      <h3>آخر المصادر المضافة</h3>
+      <div class="resource-list" id="recentResources"></div>
+    </div>
+
+  </section>
+
+  <!-- الإحصائيات -->
+
+  <section class="page" id="stats">
+
+    <div class="page-head">
+      <div>
+        <span class="eyebrow">متابعة التقدم</span>
+        <h2>الإحصائيات</h2>
+        <p>أرقامك مبنية على نشاطك ومصادرك الفعلية.</p>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+
+      <div class="stat">
         <span>إجمالي المصادر</span>
         <strong id="totalResources">0</strong>
         <small>مصدر محفوظ</small>
       </div>
 
-      <div class="real-stat">
+      <div class="stat">
         <span>المصادر المكتملة</span>
         <strong id="completedResources">0</strong>
         <small>تمت دراستها</small>
       </div>
 
-      <div class="real-stat">
+      <div class="stat">
         <span>نسبة الإنجاز</span>
         <strong id="completionRate">0%</strong>
-        <small>محسوبة من نشاطك</small>
+        <div class="progress">
+          <i id="completionProgress" style="width:0%"></i>
+        </div>
       </div>
 
-      <div class="real-stat">
+      <div class="stat">
         <span>وقت الدراسة</span>
         <strong id="studyMinutes">0</strong>
         <small>دقيقة مسجلة</small>
       </div>
+
     </div>
 
-    <div class="student-note">
-      <b>✦</b>
-      الإحصائيات تعتمد فقط على المصادر التي تضيفها والمهام التي تنهيها.
+    <div class="card">
+      <h3>تقدم الأقسام</h3>
+      <div id="categoryStats"></div>
     </div>
-
-    <div class="categories-grid" id="homeCategories"></div>
 
   </section>
 
+  <!-- جميع المصادر -->
+
   <section class="page" id="resources">
 
-    <div class="student-header">
+    <div class="page-head">
       <div>
         <span class="eyebrow">مصادري</span>
         <h2>جميع مصادرك التعليمية</h2>
-        <p>الفيديوهات والمستندات والروابط التي أضفتها بنفسك.</p>
+        <p>الفيديوهات والمستندات والملفات التي أضفتها بنفسك.</p>
       </div>
 
-      <button class="add-main-btn" onclick="openModal()">
+      <button class="add-btn" onclick="openResourceModal()">
         + إضافة مصدر
       </button>
     </div>
@@ -849,6 +1125,8 @@ button {
 
   </section>
 
+  <!-- صفحة قسم معين -->
+
   <section class="page" id="categoryPage">
 
     <div class="card">
@@ -856,7 +1134,7 @@ button {
       <h2 id="categoryTitle">القسم</h2>
       <p id="categoryDescription"></p>
 
-      <button class="add-main-btn" id="categoryAddButton">
+      <button class="add-btn" id="categoryAddButton">
         + إضافة مصدر لهذا القسم
       </button>
 
@@ -865,16 +1143,39 @@ button {
 
   </section>
 
+  <!-- صفحة الاختبارات -->
+
+  <section class="page" id="quizzes">
+
+    <div class="page-head">
+      <div>
+        <span class="eyebrow">اختبارات تفاعلية</span>
+        <h2 id="quizPageTitle">الاختبارات</h2>
+        <p>أنشئ أسئلتك واختبر نفسك بخيارات متعددة.</p>
+      </div>
+
+      <button class="add-btn" onclick="openQuizModal()">
+        + إنشاء اختبار
+      </button>
+    </div>
+
+    <div class="quiz-grid" id="quizList"></div>
+
+  </section>
+
 </main>
 </div>
 
-<div class="modal-overlay" id="modal">
+<!-- نافذة إضافة مصدر -->
+
+<div class="modal-overlay" id="resourceModal">
+
   <div class="modal">
 
-    <button class="close" onclick="closeModal()">×</button>
+    <button class="close" onclick="closeModal('resourceModal')">×</button>
 
     <h2>إضافة مصدر جديد</h2>
-    <p>أضف فيديو أو مستندًا أو رابطًا إلى مساحتك الشخصية.</p>
+    <p>أضف رابطًا أو ملفًا من جهازك، وسيظهر داخل الموقع.</p>
 
     <form id="resourceForm">
 
@@ -887,20 +1188,11 @@ button {
       </label>
 
       <label class="form-label">
-        نوع المصدر
-        <select id="resourceType">
-          <option value="video">فيديو</option>
-          <option value="document">مستند أو ملف</option>
-          <option value="link">رابط خارجي</option>
-        </select>
-      </label>
-
-      <label class="form-label">
         القسم
         <select id="resourceCategory">
           <option value="quant-foundation">تأسيس كمي</option>
-          <option value="verbal-foundation">تأسيس لفظي</option>
           <option value="quant-training">تدريب كمي</option>
+          <option value="verbal-foundation">تأسيس لفظي</option>
           <option value="verbal-training">تدريب لفظي</option>
           <option value="quant-tests">اختبارات كمي</option>
           <option value="verbal-tests">اختبارات لفظي</option>
@@ -908,12 +1200,29 @@ button {
       </label>
 
       <label class="form-label">
-        رابط الفيديو أو المستند
+        نوع المصدر
+        <select id="resourceType">
+          <option value="video">فيديو</option>
+          <option value="image">صورة</option>
+          <option value="document">مستند أو PDF</option>
+          <option value="link">رابط خارجي</option>
+        </select>
+      </label>
+
+      <label class="form-label">
+        رابط المصدر، إن وجد
         <input
           id="resourceUrl"
           type="url"
-          required
           placeholder="https://...">
+      </label>
+
+      <label class="form-label">
+        أو اختر ملفًا من جهازك
+        <input
+          id="resourceFile"
+          type="file"
+          accept="image/*,video/*,.pdf,.doc,.docx,.ppt,.pptx,.xls,.xlsx,.txt">
       </label>
 
       <label class="form-label">
@@ -925,6 +1234,13 @@ button {
           value="0">
       </label>
 
+      <label class="form-label">
+        وصف مختصر
+        <textarea
+          id="resourceDescription"
+          placeholder="اكتب ملاحظاتك عن المصدر..."></textarea>
+      </label>
+
       <button class="save-btn" type="submit">
         حفظ المصدر
       </button>
@@ -933,10 +1249,136 @@ button {
   </div>
 </div>
 
+<!-- نافذة إنشاء اختبار -->
+
+<div class="modal-overlay" id="quizModal">
+
+  <div class="modal large">
+
+    <button class="close" onclick="closeModal('quizModal')">×</button>
+
+    <h2>إنشاء اختبار</h2>
+    <p>أنشئ اختبارًا يحتوي على أسئلة وخيارات متعددة.</p>
+
+    <form id="quizForm">
+
+      <label class="form-label">
+        اسم الاختبار
+        <input
+          id="quizTitle"
+          required
+          placeholder="مثال: اختبار النسب والتناسب">
+      </label>
+
+      <label class="form-label">
+        نوع الاختبار
+        <select id="quizCategory">
+          <option value="quant-tests">اختبار كمي</option>
+          <option value="verbal-tests">اختبار لفظي</option>
+        </select>
+      </label>
+
+      <label class="form-label">
+        السؤال
+        <textarea
+          id="questionText"
+          required
+          placeholder="اكتب السؤال هنا..."></textarea>
+      </label>
+
+      <label class="form-label">
+        الخيار الأول
+        <div class="option-row">
+          <input type="radio" name="correctOption" value="0" checked>
+          <input id="option0" type="text" required placeholder="الخيار الأول">
+        </div>
+      </label>
+
+      <label class="form-label">
+        الخيار الثاني
+        <div class="option-row">
+          <input type="radio" name="correctOption" value="1">
+          <input id="option1" type="text" required placeholder="الخيار الثاني">
+        </div>
+      </label>
+
+      <label class="form-label">
+        الخيار الثالث
+        <div class="option-row">
+          <input type="radio" name="correctOption" value="2">
+          <input id="option2" type="text" required placeholder="الخيار الثالث">
+        </div>
+      </label>
+
+      <label class="form-label">
+        الخيار الرابع
+        <div class="option-row">
+          <input type="radio" name="correctOption" value="3">
+          <input id="option3" type="text" required placeholder="الخيار الرابع">
+        </div>
+      </label>
+
+      <label class="form-label">
+        شرح الإجابة
+        <textarea
+          id="questionExplanation"
+          placeholder="شرح اختياري للإجابة الصحيحة..."></textarea>
+      </label>
+
+      <button class="save-btn" type="submit">
+        حفظ السؤال
+      </button>
+
+    </form>
+
+  </div>
+</div>
+
+<!-- نافذة عرض الوسائط -->
+
+<div class="modal-overlay" id="viewerModal">
+
+  <div class="viewer">
+
+    <button class="close" onclick="closeModal('viewerModal')">×</button>
+
+    <div class="viewer-content" id="viewerContent"></div>
+
+  </div>
+</div>
+
+<!-- نافذة الاختبار -->
+
+<div class="modal-overlay" id="runnerModal">
+
+  <div class="modal">
+
+    <button class="close" onclick="closeModal('runnerModal')">×</button>
+
+    <div id="runnerContent"></div>
+
+  </div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-const STORAGE_KEY = "rambo_qudrat_student_resources";
+/* =========================
+   قاعدة البيانات المحلية
+========================= */
+
+const DB_NAME = "rambo_qudrat_database";
+const DB_VERSION = 1;
+
+let db;
+let resources = [];
+let quizzes = [];
+
+let currentCategory = null;
+let currentQuizCategory = null;
+let currentQuiz = null;
+let currentQuestion = 0;
+let quizScore = 0;
 
 const categories = [
   {
@@ -946,16 +1388,16 @@ const categories = [
     icon:"∑"
   },
   {
-    id:"verbal-foundation",
-    title:"تأسيس لفظي",
-    description:"المفردات والتناظر وإكمال الجمل",
-    icon:"ع"
-  },
-  {
     id:"quant-training",
     title:"تدريب كمي",
     description:"تطبيقات ومسائل كمي متنوعة",
     icon:"⌁"
+  },
+  {
+    id:"verbal-foundation",
+    title:"تأسيس لفظي",
+    description:"المفردات والتناظر وإكمال الجمل",
+    icon:"ع"
   },
   {
     id:"verbal-training",
@@ -977,39 +1419,271 @@ const categories = [
   }
 ];
 
-let resources = loadResources();
-let currentCategory = null;
 
-function loadResources() {
-  try {
-    return JSON.parse(localStorage.getItem(STORAGE_KEY)) || [];
-  } catch {
-    return [];
-  }
+/* =========================
+   تشغيل IndexedDB
+========================= */
+
+function openDatabase(){
+  return new Promise((resolve,reject)=>{
+    const request = indexedDB.open(DB_NAME,DB_VERSION);
+
+    request.onupgradeneeded = event => {
+      const database = event.target.result;
+
+      if(!database.objectStoreNames.contains("resources")){
+        database.createObjectStore("resources",{keyPath:"id"});
+      }
+
+      if(!database.objectStoreNames.contains("quizzes")){
+        database.createObjectStore("quizzes",{keyPath:"id"});
+      }
+    };
+
+    request.onsuccess = event => {
+      db = event.target.result;
+      resolve(db);
+    };
+
+    request.onerror = () => reject(request.error);
+  });
 }
 
-function saveResources() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(resources));
+function getAll(storeName){
+  return new Promise((resolve,reject)=>{
+    const transaction = db.transaction(storeName,"readonly");
+    const store = transaction.objectStore(storeName);
+    const request = store.getAll();
+
+    request.onsuccess = () => resolve(request.result || []);
+    request.onerror = () => reject(request.error);
+  });
 }
 
-function categoryById(id) {
+function putItem(storeName,item){
+  return new Promise((resolve,reject)=>{
+    const transaction = db.transaction(storeName,"readwrite");
+    const store = transaction.objectStore(storeName);
+    const request = store.put(item);
+
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+
+function deleteItem(storeName,id){
+  return new Promise((resolve,reject)=>{
+    const transaction = db.transaction(storeName,"readwrite");
+    const request = transaction.objectStore(storeName).delete(id);
+
+    request.onsuccess = () => resolve();
+    request.onerror = () => reject(request.error);
+  });
+}
+
+
+/* =========================
+   أدوات عامة
+========================= */
+
+function categoryById(id){
   return categories.find(category => category.id === id);
 }
 
-function renderCategoryCards(containerId, filter = null) {
+function escapeHTML(value){
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function createId(){
+  if(window.crypto && crypto.randomUUID){
+    return crypto.randomUUID();
+  }
+
+  return Date.now().toString(36) + Math.random().toString(36).slice(2);
+}
+
+function showToast(message){
+  const toast = document.getElementById("toast");
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  clearTimeout(window.toastTimer);
+
+  window.toastTimer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },2500);
+}
+
+function openModal(id){
+  document.getElementById(id).classList.add("show");
+}
+
+function closeModal(id){
+  document.getElementById(id).classList.remove("show");
+}
+
+
+/* =========================
+   التنقل بين الصفحات
+========================= */
+
+function goToPage(pageId){
+  let actualPage = pageId;
+
+  if(pageId === "quant-tests" || pageId === "verbal-tests"){
+    currentQuizCategory = pageId;
+    actualPage = "quizzes";
+    renderQuizzes();
+  }
+
+  document.querySelectorAll(".page").forEach(page=>{
+    page.classList.remove("active");
+  });
+
+  const page = document.getElementById(actualPage);
+
+  if(page){
+    page.classList.add("active");
+  }
+
+  document.querySelectorAll(".nav-btn").forEach(button=>{
+    button.classList.remove("active");
+  });
+
+  const selectedButton = document.querySelector(
+    `.nav-btn[data-page="${pageId}"]`
+  );
+
+  if(selectedButton){
+    selectedButton.classList.add("active");
+  }
+
+  const titles = {
+    home:"مساحتي التعليمية",
+    stats:"الإحصائيات",
+    resources:"مصادري",
+    categoryPage:"قسم القدرات",
+    quizzes: currentQuizCategory === "verbal-tests"
+      ? "اختبارات لفظي"
+      : "اختبارات كمي"
+  };
+
+  document.getElementById("pageTitle").textContent =
+    titles[actualPage] || "مساحتي التعليمية";
+
+  document.getElementById("sidebar").classList.remove("open");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+document.querySelectorAll(".nav-btn").forEach(button=>{
+  button.addEventListener("click",()=>{
+    const page = button.dataset.page;
+
+    if(categories.some(category => category.id === page)){
+      currentCategory = page;
+      renderCurrentCategory();
+      goToPage("categoryPage");
+      return;
+    }
+
+    goToPage(page);
+  });
+});
+
+document.querySelectorAll(".group-title").forEach(button=>{
+  button.addEventListener("click",()=>{
+    button.parentElement.classList.toggle("open");
+  });
+});
+
+document.getElementById("mobileMenu").addEventListener("click",()=>{
+  document.getElementById("sidebar").classList.toggle("open");
+});
+
+document.querySelectorAll(".modal-overlay").forEach(modal=>{
+  modal.addEventListener("click",event=>{
+    if(event.target === modal){
+      modal.classList.remove("show");
+    }
+  });
+});
+
+
+/* =========================
+   عرض المصادر
+========================= */
+
+function resourceIcon(resource){
+  if(resource.fileType?.startsWith("image/")) return "▧";
+  if(resource.fileType?.startsWith("video/")) return "▶";
+  if(resource.type === "video") return "▶";
+  if(resource.type === "document") return "▤";
+  return "↗";
+}
+
+function resourceHTML(resource){
+  return `
+    <div class="resource-item ${resource.completed ? "completed" : ""}">
+
+      <button
+        class="resource-check ${resource.completed ? "done" : ""}"
+        onclick="toggleResource('${resource.id}')">
+        ${resource.completed ? "✓" : ""}
+      </button>
+
+      <div class="resource-info">
+        <strong>
+          ${resourceIcon(resource)} ${escapeHTML(resource.title)}
+        </strong>
+
+        <small>
+          ${resource.minutes || 0} دقيقة
+          ${resource.completed ? " • مكتمل" : " • غير مكتمل"}
+          ${resource.fileName ? " • ملف محلي" : ""}
+        </small>
+      </div>
+
+      <button
+        class="resource-open"
+        title="فتح المصدر داخل الموقع"
+        onclick="openResource('${resource.id}')">
+        ↗
+      </button>
+
+      <button
+        class="resource-delete"
+        title="حذف المصدر"
+        onclick="deleteResource('${resource.id}')">
+        ×
+      </button>
+
+    </div>
+  `;
+}
+
+function renderCategoryCards(containerId){
   const container = document.getElementById(containerId);
 
-  const visibleCategories = filter
-    ? categories.filter(category => category.id === filter)
-    : categories;
+  if(!container) return;
 
-  container.innerHTML = visibleCategories.map(category => {
+  container.innerHTML = categories.map(category=>{
     const list = resources.filter(
       resource => resource.category === category.id
     );
 
     return `
       <article class="category-card">
+
         <div class="category-top">
           <div>
             <div class="category-icon">${category.icon}</div>
@@ -1017,74 +1691,334 @@ function renderCategoryCards(containerId, filter = null) {
             <p>${category.description}</p>
           </div>
 
-          <span class="category-count">${list.length} مصدر</span>
+          <span class="category-count">
+            ${list.length} مصدر
+          </span>
         </div>
 
         <div class="resource-list">
           ${
             list.length
-              ? list.map(resourceHTML).join("")
-              : `<div class="empty-resources">لم تضف مصادر بعد</div>`
+              ? list.slice(0,4).map(resourceHTML).join("")
+              : `<div class="empty">لم تضف مصادر بعد</div>`
           }
         </div>
 
         <div class="category-actions">
+
           <button
-            class="add-resource-small"
-            onclick="openModal('${category.id}')">
-            + إضافة مصدر
+            class="add-small"
+            onclick="openResourceModal('${category.id}')">
+            + إضافة
           </button>
 
           <button
-            class="mark-category"
-            onclick="completeCategory('${category.id}')">
-            إنهاء القسم
+            class="open-small"
+            onclick="openCategory('${category.id}')">
+            فتح القسم
           </button>
+
         </div>
+
       </article>
     `;
   }).join("");
 }
 
-function resourceHTML(resource) {
-  const icon = resource.type === "video"
-    ? "▶"
-    : resource.type === "document"
-      ? "▤"
-      : "↗";
-
-  return `
-    <div class="resource-item ${resource.completed ? "completed" : ""}">
-      <button
-        class="resource-check ${resource.completed ? "done" : ""}"
-        onclick="toggleResource('${resource.id}')">
-        ${resource.completed ? "✓" : ""}
-      </button>
-
-      <div class="resource-item-info">
-        <a
-          href="${safe(resource.url)}"
-          target="_blank"
-          rel="noopener noreferrer">
-          ${icon} ${escapeHTML(resource.title)}
-        </a>
-
-        <small>
-          ${resource.minutes} دقيقة
-          ${resource.completed ? " • مكتمل" : " • غير مكتمل"}
-        </small>
-      </div>
-
-      <button
-        class="delete-resource"
-        onclick="deleteResource('${resource.id}')">
-        ×
-      </button>
-    </div>
-  `;
+function openCategory(categoryId){
+  currentCategory = categoryId;
+  renderCurrentCategory();
+  goToPage("categoryPage");
 }
 
-function updateStats() {
+function renderCurrentCategory(){
+  const category = categoryById(currentCategory);
+
+  if(!category) return;
+
+  const list = resources.filter(
+    resource => resource.category === currentCategory
+  );
+
+  document.getElementById("categoryEyebrow").textContent =
+    category.title;
+
+  document.getElementById("categoryTitle").textContent =
+    category.title;
+
+  document.getElementById("categoryDescription").textContent =
+    category.description;
+
+  document.getElementById("categoryResources").innerHTML =
+    list.length
+      ? list.map(resourceHTML).join("")
+      : `<div class="empty">لم تضف مصادر لهذا القسم بعد</div>`;
+
+  document.getElementById("categoryAddButton").onclick = ()=>{
+    openResourceModal(currentCategory);
+  };
+}
+
+function renderRecentResources(){
+  const container = document.getElementById("recentResources");
+
+  const list = [...resources]
+    .sort((a,b)=>b.createdAt - a.createdAt)
+    .slice(0,5);
+
+  container.innerHTML = list.length
+    ? list.map(resourceHTML).join("")
+    : `<div class="empty">لم تضف أي مصدر حتى الآن</div>`;
+}
+
+
+/* =========================
+   إضافة مصدر
+========================= */
+
+function openResourceModal(categoryId = ""){
+  document.getElementById("resourceForm").reset();
+
+  if(categoryId){
+    document.getElementById("resourceCategory").value = categoryId;
+  }
+
+  openModal("resourceModal");
+
+  setTimeout(()=>{
+    document.getElementById("resourceTitle").focus();
+  },100);
+}
+
+document.getElementById("resourceForm").addEventListener("submit",async event=>{
+  event.preventDefault();
+
+  const title = document.getElementById("resourceTitle").value.trim();
+  const category = document.getElementById("resourceCategory").value;
+  const selectedType = document.getElementById("resourceType").value;
+  const url = document.getElementById("resourceUrl").value.trim();
+  const fileInput = document.getElementById("resourceFile");
+  const file = fileInput.files[0] || null;
+  const minutes = Math.max(
+    0,
+    Number(document.getElementById("resourceMinutes").value) || 0
+  );
+  const description =
+    document.getElementById("resourceDescription").value.trim();
+
+  if(!title){
+    alert("اكتب اسم المصدر أولًا");
+    return;
+  }
+
+  if(!url && !file){
+    alert("أضف رابطًا أو اختر ملفًا من جهازك");
+    return;
+  }
+
+  const resource = {
+    id:createId(),
+    title,
+    category,
+    type:selectedType,
+    url:url || "",
+    file:file || null,
+    fileName:file ? file.name : "",
+    fileType:file ? file.type : "",
+    minutes,
+    description,
+    completed:false,
+    createdAt:Date.now()
+  };
+
+  try{
+    await putItem("resources",resource);
+
+    resources.push(resource);
+
+    closeModal("resourceModal");
+    refresh();
+
+    showToast("تم حفظ المصدر بنجاح");
+  }catch(error){
+    console.error(error);
+    alert("تعذر حفظ الملف. قد تكون مساحة التخزين غير كافية.");
+  }
+});
+
+async function toggleResource(id){
+  const resource = resources.find(item => item.id === id);
+
+  if(!resource) return;
+
+  resource.completed = !resource.completed;
+
+  await putItem("resources",resource);
+  refresh();
+
+  showToast(
+    resource.completed
+      ? "تم تسجيل المصدر كمكتمل"
+      : "تمت إعادة المصدر إلى غير مكتمل"
+  );
+}
+
+async function deleteResource(id){
+  const resource = resources.find(item => item.id === id);
+
+  if(!resource) return;
+
+  if(!confirm(`هل تريد حذف المصدر "${resource.title}"؟`)){
+    return;
+  }
+
+  await deleteItem("resources",id);
+
+  resources = resources.filter(item => item.id !== id);
+
+  refresh();
+  showToast("تم حذف المصدر");
+}
+
+
+/* =========================
+   فتح الملفات والروابط داخل الموقع
+========================= */
+
+function youtubeEmbed(url){
+  try{
+    const parsed = new URL(url);
+
+    if(parsed.hostname.includes("youtu.be")){
+      return `https://www.youtube.com/embed/${parsed.pathname.slice(1)}`;
+    }
+
+    if(parsed.hostname.includes("youtube.com")){
+      const videoId = parsed.searchParams.get("v");
+
+      if(videoId){
+        return `https://www.youtube.com/embed/${videoId}`;
+      }
+    }
+  }catch(error){}
+
+  return null;
+}
+
+async function openResource(id){
+  const resource = resources.find(item => item.id === id);
+
+  if(!resource) return;
+
+  const content = document.getElementById("viewerContent");
+
+  content.innerHTML = "";
+
+  openModal("viewerModal");
+
+  if(resource.file){
+    const objectUrl = URL.createObjectURL(resource.file);
+
+    if(resource.fileType.startsWith("image/")){
+      content.innerHTML = `
+        <img src="${objectUrl}" alt="${escapeHTML(resource.title)}">
+      `;
+      return;
+    }
+
+    if(resource.fileType.startsWith("video/")){
+      content.innerHTML = `
+        <video controls autoplay>
+          <source src="${objectUrl}" type="${escapeHTML(resource.fileType)}">
+          متصفحك لا يدعم تشغيل هذا الفيديو.
+        </video>
+      `;
+      return;
+    }
+
+    if(resource.fileType === "application/pdf"){
+      content.innerHTML = `
+        <iframe
+          src="${objectUrl}"
+          title="${escapeHTML(resource.title)}">
+        </iframe>
+      `;
+      return;
+    }
+
+    content.innerHTML = `
+      <div class="viewer-message">
+        <p>هذا الملف لا يدعم العرض المباشر داخل المتصفح.</p>
+        <a
+          href="${objectUrl}"
+          download="${escapeHTML(resource.fileName)}"
+          style="color:#ffbd61">
+          تحميل الملف
+        </a>
+      </div>
+    `;
+
+    return;
+  }
+
+  if(resource.url){
+    const youtubeUrl = youtubeEmbed(resource.url);
+
+    if(youtubeUrl){
+      content.innerHTML = `
+        <iframe
+          src="${youtubeUrl}"
+          allow="autoplay; encrypted-media; picture-in-picture"
+          allowfullscreen>
+        </iframe>
+      `;
+      return;
+    }
+
+    if(resource.type === "image"){
+      content.innerHTML = `
+        <img
+          src="${escapeHTML(resource.url)}"
+          alt="${escapeHTML(resource.title)}">
+      `;
+      return;
+    }
+
+    if(resource.type === "video"){
+      content.innerHTML = `
+        <video controls autoplay>
+          <source src="${escapeHTML(resource.url)}">
+          متصفحك لا يدعم تشغيل هذا الفيديو.
+        </video>
+      `;
+      return;
+    }
+
+    if(resource.url.toLowerCase().endsWith(".pdf")){
+      content.innerHTML = `
+        <iframe
+          src="${escapeHTML(resource.url)}"
+          title="${escapeHTML(resource.title)}">
+        </iframe>
+      `;
+      return;
+    }
+
+    content.innerHTML = `
+      <iframe
+        src="${escapeHTML(resource.url)}"
+        title="${escapeHTML(resource.title)}">
+      </iframe>
+    `;
+  }
+}
+
+
+/* =========================
+   الإحصائيات
+========================= */
+
+function updateStats(){
   const total = resources.length;
 
   const completed = resources.filter(
@@ -1092,223 +2026,349 @@ function updateStats() {
   ).length;
 
   const minutes = resources.reduce(
-    (sum, resource) => sum + Number(resource.minutes || 0),
+    (sum,resource)=>sum + Number(resource.minutes || 0),
     0
   );
 
-  const rate = total === 0
-    ? 0
-    : Math.round((completed / total) * 100);
+  const rate = total
+    ? Math.round((completed / total) * 100)
+    : 0;
 
   document.getElementById("totalResources").textContent = total;
   document.getElementById("completedResources").textContent = completed;
   document.getElementById("completionRate").textContent = rate + "%";
   document.getElementById("studyMinutes").textContent = minutes;
+  document.getElementById("completionProgress").style.width = rate + "%";
+
+  const statsContainer = document.getElementById("categoryStats");
+
+  statsContainer.innerHTML = categories.map(category=>{
+    const list = resources.filter(
+      resource => resource.category === category.id
+    );
+
+    const done = list.filter(
+      resource => resource.completed
+    ).length;
+
+    const percentage = list.length
+      ? Math.round((done / list.length) * 100)
+      : 0;
+
+    return `
+      <div style="margin:16px 0">
+        <div style="display:flex;justify-content:space-between;gap:10px">
+          <span style="font-size:11px;color:#dbe7f5">
+            ${category.title}
+          </span>
+
+          <small style="color:#ffbd61">
+            ${done} من ${list.length}
+          </small>
+        </div>
+
+        <div class="progress">
+          <i style="width:${percentage}%"></i>
+        </div>
+      </div>
+    `;
+  }).join("");
 }
 
-function refresh() {
-  renderCategoryCards("homeCategories");
-  renderCategoryCards("resourcesCategories");
-  updateStats();
 
-  if (currentCategory) {
-    renderCurrentCategory();
+/* =========================
+   الاختبارات
+========================= */
+
+function renderQuizzes(){
+  const container = document.getElementById("quizList");
+
+  const filtered = currentQuizCategory
+    ? quizzes.filter(quiz => quiz.category === currentQuizCategory)
+    : quizzes;
+
+  document.getElementById("quizPageTitle").textContent =
+    currentQuizCategory === "quant-tests"
+      ? "اختبارات كمي"
+      : currentQuizCategory === "verbal-tests"
+        ? "اختبارات لفظي"
+        : "الاختبارات";
+
+  if(!filtered.length){
+    container.innerHTML = `
+      <div class="card" style="grid-column:1/-1">
+        <div class="empty">
+          لا توجد اختبارات بعد. أنشئ أول اختبار لك.
+        </div>
+      </div>
+    `;
+    return;
   }
+
+  container.innerHTML = filtered.map(quiz=>{
+    const category = categoryById(quiz.category);
+    const questionCount = quiz.questions.length;
+
+    return `
+      <article class="quiz-card">
+
+        <h3>${escapeHTML(quiz.title)}</h3>
+
+        <p>
+          ${category ? category.title : ""}
+          • ${questionCount} سؤال
+        </p>
+
+        <div class="quiz-actions">
+          <button
+            class="add-small"
+            onclick="startQuiz('${quiz.id}')">
+            بدء الاختبار
+          </button>
+
+          <button
+            class="open-small"
+            onclick="deleteQuiz('${quiz.id}')">
+            حذف
+          </button>
+        </div>
+
+      </article>
+    `;
+  }).join("");
 }
 
-function openModal(categoryId = "") {
-  document.getElementById("modal").classList.add("show");
+function openQuizModal(){
+  document.getElementById("quizForm").reset();
 
-  if (categoryId) {
-    document.getElementById("resourceCategory").value = categoryId;
+  if(currentQuizCategory){
+    document.getElementById("quizCategory").value = currentQuizCategory;
   }
 
-  document.getElementById("resourceTitle").focus();
+  openModal("quizModal");
 }
 
-function closeModal() {
-  document.getElementById("modal").classList.remove("show");
-  document.getElementById("resourceForm").reset();
-}
-
-document.getElementById("resourceForm").addEventListener("submit", event => {
+document.getElementById("quizForm").addEventListener("submit",async event=>{
   event.preventDefault();
 
-  const title = document.getElementById("resourceTitle").value.trim();
-  const type = document.getElementById("resourceType").value;
-  const category = document.getElementById("resourceCategory").value;
-  const url = document.getElementById("resourceUrl").value.trim();
-  const minutes = Math.max(
-    0,
-    Number(document.getElementById("resourceMinutes").value) || 0
+  const title = document.getElementById("quizTitle").value.trim();
+  const category = document.getElementById("quizCategory").value;
+  const questionText = document.getElementById("questionText").value.trim();
+  const explanation =
+    document.getElementById("questionExplanation").value.trim();
+
+  const options = [
+    document.getElementById("option0").value.trim(),
+    document.getElementById("option1").value.trim(),
+    document.getElementById("option2").value.trim(),
+    document.getElementById("option3").value.trim()
+  ];
+
+  const correctOption = Number(
+    document.querySelector('input[name="correctOption"]:checked').value
   );
 
-  if (!title || !url) {
-    alert("أكمل بيانات المصدر أولًا");
+  if(!title || !questionText || options.some(option => !option)){
+    alert("أكمل بيانات الاختبار والسؤال والخيارات");
     return;
   }
 
-  resources.push({
-    id: Date.now().toString(),
-    title,
-    type,
-    category,
-    url,
-    minutes,
-    completed:false,
-    createdAt:new Date().toISOString()
+  let quiz = quizzes.find(item =>
+    item.title === title && item.category === category
+  );
+
+  if(!quiz){
+    quiz = {
+      id:createId(),
+      title,
+      category,
+      questions:[],
+      createdAt:Date.now()
+    };
+
+    quizzes.push(quiz);
+  }
+
+  quiz.questions.push({
+    id:createId(),
+    text:questionText,
+    options,
+    correct:correctOption,
+    explanation
   });
 
-  saveResources();
-  refresh();
-  closeModal();
-  showToast("تم حفظ المصدر بنجاح");
+  await putItem("quizzes",quiz);
+
+  closeModal("quizModal");
+  renderQuizzes();
+
+  showToast("تم حفظ السؤال داخل الاختبار");
 });
 
-function toggleResource(id) {
-  const resource = resources.find(item => item.id === id);
+function startQuiz(id){
+  const quiz = quizzes.find(item => item.id === id);
 
-  if (!resource) return;
-
-  resource.completed = !resource.completed;
-  saveResources();
-  refresh();
-
-  showToast(
-    resource.completed
-      ? "تم تسجيل المصدر كمكتمل"
-      : "تم إعادة المصدر إلى غير مكتمل"
-  );
-}
-
-function deleteResource(id) {
-  if (!confirm("هل تريد حذف هذا المصدر؟")) return;
-
-  resources = resources.filter(resource => resource.id !== id);
-  saveResources();
-  refresh();
-  showToast("تم حذف المصدر");
-}
-
-function completeCategory(categoryId) {
-  const list = resources.filter(
-    resource => resource.category === categoryId
-  );
-
-  if (!list.length) {
-    alert("أضف مصدرًا واحدًا على الأقل لهذا القسم أولًا");
+  if(!quiz || !quiz.questions.length){
+    alert("هذا الاختبار لا يحتوي على أسئلة");
     return;
   }
 
-  list.forEach(resource => {
-    resource.completed = true;
-  });
+  currentQuiz = quiz;
+  currentQuestion = 0;
+  quizScore = 0;
 
-  saveResources();
-  refresh();
-  showToast("تم إنهاء جميع مصادر القسم");
+  renderQuizQuestion();
+  openModal("runnerModal");
 }
 
-function renderCurrentCategory() {
-  const category = categoryById(currentCategory);
-  const list = resources.filter(
-    resource => resource.category === currentCategory
+function renderQuizQuestion(){
+  const container = document.getElementById("runnerContent");
+  const question = currentQuiz.questions[currentQuestion];
+
+  if(!question){
+    showQuizResult();
+    return;
+  }
+
+  container.innerHTML = `
+    <span class="eyebrow">
+      السؤال ${currentQuestion + 1} من ${currentQuiz.questions.length}
+    </span>
+
+    <h2 style="margin-top:8px">
+      ${escapeHTML(currentQuiz.title)}
+    </h2>
+
+    <p style="color:#dbe7f5;font-size:14px;line-height:2">
+      ${escapeHTML(question.text)}
+    </p>
+
+    <div style="margin-top:18px">
+      ${question.options.map((option,index)=>`
+        <label style="
+          display:block;
+          padding:12px;
+          margin:9px 0;
+          color:#dbe7f5;
+          background:#081322;
+          border:1px solid #263d58;
+          border-radius:8px;
+          cursor:pointer;
+          font-size:12px">
+
+          <input
+            type="radio"
+            name="answer"
+            value="${index}"
+            style="accent-color:#f28a25;margin-left:7px">
+
+          ${escapeHTML(option)}
+        </label>
+      `).join("")}
+    </div>
+
+    <button
+      class="save-btn"
+      onclick="submitAnswer()">
+      ${currentQuestion === currentQuiz.questions.length - 1
+        ? "إنهاء الاختبار"
+        : "السؤال التالي"}
+    </button>
+  `;
+}
+
+function submitAnswer(){
+  const selected = document.querySelector(
+    'input[name="answer"]:checked'
   );
 
-  document.getElementById("categoryEyebrow").textContent = category.title;
-  document.getElementById("categoryTitle").textContent = category.title;
-  document.getElementById("categoryDescription").textContent =
-    category.description;
+  if(!selected){
+    alert("اختر إجابة أولًا");
+    return;
+  }
 
-  document.getElementById("categoryResources").innerHTML = list.length
-    ? list.map(resourceHTML).join("")
-    : `<div class="empty-resources">لم تضف مصادر لهذا القسم بعد</div>`;
+  const question = currentQuiz.questions[currentQuestion];
+  const answer = Number(selected.value);
 
-  document.getElementById("categoryAddButton").onclick = () => {
-    openModal(currentCategory);
-  };
+  if(answer === question.correct){
+    quizScore++;
+  }
+
+  currentQuestion++;
+  renderQuizQuestion();
 }
 
-function goToPage(pageId) {
-  document.querySelectorAll(".page").forEach(page => {
-    page.classList.remove("active");
-  });
+function showQuizResult(){
+  const total = currentQuiz.questions.length;
+  const percentage = Math.round((quizScore / total) * 100);
 
-  document.querySelectorAll(".menu button").forEach(button => {
-    button.classList.remove("active");
-  });
+  document.getElementById("runnerContent").innerHTML = `
+    <div style="text-align:center;padding:25px 5px">
 
-  const page = document.getElementById(pageId);
+      <div style="font-size:45px;color:#ffbd61">✓</div>
 
-  if (page) {
-    page.classList.add("active");
-  }
+      <h2>انتهى الاختبار</h2>
 
-  const button = document.querySelector(
-    `.menu button[data-page="${pageId}"]`
-  );
+      <p style="color:#b9c7d9">
+        نتيجتك: ${quizScore} من ${total}
+      </p>
 
-  if (button) {
-    button.classList.add("active");
-  }
+      <strong style="display:block;color:#39d99b;font-size:32px">
+        ${percentage}%
+      </strong>
 
-  const titles = {
-    home:"مساحتي التعليمية",
-    resources:"مصادري",
-    categoryPage:"قسم القدرات"
-  };
+      <button
+        class="save-btn"
+        onclick="closeModal('runnerModal')">
+        إغلاق
+      </button>
 
-  document.getElementById("pageTitle").textContent =
-    titles[pageId] || "مساحتي التعليمية";
-
-  document.getElementById("sidebar").classList.remove("open");
-  window.scrollTo({ top:0, behavior:"smooth" });
+    </div>
+  `;
 }
 
-document.querySelectorAll(".menu button").forEach(button => {
-  button.addEventListener("click", () => {
-    const page = button.dataset.page;
+async function deleteQuiz(id){
+  const quiz = quizzes.find(item => item.id === id);
 
-    if (categories.some(category => category.id === page)) {
-      currentCategory = page;
-      renderCurrentCategory();
-      goToPage("categoryPage");
-    } else {
-      currentCategory = null;
-      goToPage(page);
-    }
-  });
-});
+  if(!quiz) return;
 
-document.getElementById("mobileMenu").addEventListener("click", () => {
-  document.getElementById("sidebar").classList.toggle("open");
-});
-
-document.getElementById("modal").addEventListener("click", event => {
-  if (event.target.id === "modal") {
-    closeModal();
+  if(!confirm(`هل تريد حذف اختبار "${quiz.title}"؟`)){
+    return;
   }
-});
 
-document.getElementById("searchInput").addEventListener("input", event => {
+  await deleteItem("quizzes",id);
+
+  quizzes = quizzes.filter(item => item.id !== id);
+
+  renderQuizzes();
+  showToast("تم حذف الاختبار");
+}
+
+
+/* =========================
+   البحث
+========================= */
+
+document.getElementById("searchInput").addEventListener("input",event=>{
   const query = event.target.value.trim().toLowerCase();
 
-  if (!query) {
-    refresh();
+  if(!query){
+    renderCategoryCards("resourcesCategories");
     return;
   }
 
   const results = resources.filter(resource =>
-    resource.title.toLowerCase().includes(query)
+    resource.title.toLowerCase().includes(query) ||
+    resource.description.toLowerCase().includes(query)
   );
 
-  document.querySelectorAll(".page").forEach(page => {
+  document.querySelectorAll(".page").forEach(page=>{
     page.classList.remove("active");
   });
 
   document.getElementById("resources").classList.add("active");
 
-  document.querySelectorAll(".menu button").forEach(button => {
+  document.querySelectorAll(".nav-btn").forEach(button=>{
     button.classList.remove("active");
   });
 
@@ -1320,43 +2380,63 @@ document.getElementById("searchInput").addEventListener("input", event => {
 
   container.innerHTML = `
     <article class="category-card" style="grid-column:1/-1">
+
       <h3>نتائج البحث</h3>
-      ${
-        results.length
-          ? results.map(resourceHTML).join("")
-          : `<div class="empty-resources">لا توجد نتائج</div>`
-      }
+
+      <div class="resource-list">
+        ${
+          results.length
+            ? results.map(resourceHTML).join("")
+            : `<div class="empty">لا توجد نتائج مطابقة</div>`
+        }
+      </div>
+
     </article>
   `;
 });
 
-function showToast(message) {
-  const toast = document.getElementById("toast");
 
-  toast.textContent = message;
-  toast.classList.add("show");
+/* =========================
+   تحديث الموقع
+========================= */
 
-  clearTimeout(window.toastTimer);
+function refresh(){
+  renderRecentResources();
+  renderCategoryCards("resourcesCategories");
+  updateStats();
 
-  window.toastTimer = setTimeout(() => {
-    toast.classList.remove("show");
-  }, 2500);
+  if(currentCategory){
+    renderCurrentCategory();
+  }
+
+  if(document.getElementById("quizzes").classList.contains("active")){
+    renderQuizzes();
+  }
 }
 
-function escapeHTML(value) {
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
+
+/* =========================
+   بدء التشغيل
+========================= */
+
+async function initialize(){
+  try{
+    await openDatabase();
+
+    resources = await getAll("resources");
+    quizzes = await getAll("quizzes");
+
+    refresh();
+  }catch(error){
+    console.error(error);
+
+    alert(
+      "تعذر تشغيل مساحة التخزين المحلية. جرّب فتح الموقع من متصفح حديث."
+    );
+  }
 }
 
-function safe(value) {
-  return escapeHTML(value);
-}
-
-refresh();
+initialize();
 </script>
 
 </body>
