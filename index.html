@@ -541,10 +541,11 @@ textarea:focus{
 .resource-info strong{
   display:block;
   overflow:hidden;
-  color:#dbe7f5;
+  color:#29495d !important;
   text-overflow:ellipsis;
   white-space:nowrap;
   font-size:11px;
+  font-weight:700;
 }
 
 .resource-info small{
@@ -553,7 +554,7 @@ textarea:focus{
 }
 
 .resource-item.completed strong{
-  color:var(--green);
+  color:#4f806f !important;
   text-decoration:line-through;
 }
 
@@ -1687,24 +1688,35 @@ body{
 }
 .progress{background:#d6d9d7 !important;}
 
-</style>
 
-<style id="final-sidebar-button-position">
-/* Final sidebar control placement: keep it completely clear of the logo/header. */
-@media (max-width:1200px){
-  .mobile-menu,
+/* Final resource-title contrast fix */
+.resource-item .resource-info strong{color:#29495d !important;font-weight:700;}
+.resource-item.completed .resource-info strong{color:#4f806f !important;}
+</style>
+<style>
+/* Sidebar control — keep it away from the logo and above the drawer */
+@media (max-width: 900px){
+  .mobile-menu{
+    position: fixed !important;
+    left: 18px !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 22px !important;
+    z-index: 300000 !important;
+    width: 48px !important;
+    height: 48px !important;
+    display: grid !important;
+    place-items: center !important;
+    border-radius: 50% !important;
+    box-shadow: 0 8px 22px rgba(47,72,88,.18) !important;
+  }
   .sidebar.open ~ .main .mobile-menu{
-    position:fixed !important;
-    top:auto !important;
-    right:auto !important;
-    bottom:22px !important;
-    left:22px !important;
-    z-index:300000 !important;
-    width:48px !important;
-    height:48px !important;
-    display:grid !important;
-    place-items:center !important;
-    border-radius:50% !important;
+    position: fixed !important;
+    left: 18px !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: 22px !important;
+    z-index: 300000 !important;
   }
 }
 </style>
