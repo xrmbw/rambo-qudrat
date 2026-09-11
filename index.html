@@ -1692,32 +1692,78 @@ body{
 /* Final resource-title contrast fix */
 .resource-item .resource-info strong{color:#29495d !important;font-weight:700;}
 .resource-item.completed .resource-info strong{color:#4f806f !important;}
+
+
+/* FINAL CONTRAST FIX — statistics and section progress text */
+#stats .page-head h2,
+#stats .page-head p,
+#stats .page-head .eyebrow,
+#stats .stats-grid .stat span,
+#stats .stats-grid .stat strong,
+#stats .stats-grid .stat small,
+#stats .card h3,
+#stats #categoryStats span,
+#stats #categoryStats small {
+  color: #294962 !important;
+}
+#stats .stats-grid .stat strong {
+  color: #23445e !important;
+}
+#stats #categoryStats {
+  color: #294962;
+}
+#stats #categoryStats > div > div:first-child {
+  color: #294962 !important;
+}
+#stats #categoryStats > div > div:first-child small {
+  color: #75665e !important;
+}
+#stats #categoryStats .progress {
+  background: #d9e0df !important;
+}
+
 </style>
-<style>
-/* Sidebar control — keep it away from the logo and above the drawer */
-@media (max-width: 900px){
-  .mobile-menu{
-    position: fixed !important;
-    left: 18px !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: 22px !important;
-    z-index: 300000 !important;
-    width: 48px !important;
-    height: 48px !important;
-    display: grid !important;
-    place-items: center !important;
-    border-radius: 50% !important;
-    box-shadow: 0 8px 22px rgba(47,72,88,.18) !important;
-  }
-  .sidebar.open ~ .main .mobile-menu{
-    position: fixed !important;
-    left: 18px !important;
-    right: auto !important;
-    top: auto !important;
-    bottom: 22px !important;
-    z-index: 300000 !important;
-  }
+
+<style id="final-contrast-fix">
+/* Final contrast cleanup */
+.secondary,
+#home .secondary,
+button.secondary {
+  color: #294962 !important;
+  background: #f4eee6 !important;
+  border-color: #b9b3aa !important;
+}
+.secondary:hover,
+#home .secondary:hover {
+  color: #203c55 !important;
+  background: #e8f0f3 !important;
+}
+
+/* Section/category labels and progress text */
+#stats,
+#stats * {
+  --stats-text: #294962;
+}
+#stats .page-head h2,
+#stats .page-head p,
+#stats .page-head .eyebrow,
+#stats .stats-grid .stat span,
+#stats .stats-grid .stat strong,
+#stats .stats-grid .stat small,
+#stats .card h3,
+#stats #categoryStats span,
+#stats #categoryStats small,
+#stats #categoryStats strong {
+  color: #294962 !important;
+}
+#stats #categoryStats > div > div:first-child {
+  color: #294962 !important;
+}
+#stats #categoryStats .progress {
+  background: #d7dddc !important;
+}
+#stats #categoryStats .progress i {
+  background: linear-gradient(90deg,#4d86a0,#7eaab9) !important;
 }
 </style>
 </head>
